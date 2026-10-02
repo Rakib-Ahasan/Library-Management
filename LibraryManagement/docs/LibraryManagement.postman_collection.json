@@ -1,0 +1,39 @@
+﻿{
+  "info": {
+    "name": "Library Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://localhost:5001" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Books",
+      "item": [
+        { "name": "List books", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/v1/books?page=1&pageSize=10&search=" } },
+        { "name": "Get book", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/v1/books/1" } },
+        { "name": "Create book", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }], "body": { "mode": "raw", "raw": "{\n  \"title\": \"Clean Code\",\n  \"author\": \"Robert C. Martin\",\n  \"isbn\": \"9780132350884\",\n  \"totalCopies\": 3\n}" }, "url": "{{baseUrl}}/api/v1/books" } },
+        { "name": "Update book", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"title\": \"Clean Code - Updated\",\n  \"author\": \"Robert C. Martin\",\n  \"isbn\": \"9780132350884\",\n  \"totalCopies\": 4\n}" }, "url": "{{baseUrl}}/api/v1/books/1" } },
+        { "name": "Delete book", "request": { "method": "DELETE", "header": [], "url": "{{baseUrl}}/api/v1/books/1" } }
+      ]
+    },
+    {
+      "name": "Members",
+      "item": [
+        { "name": "List members", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/v1/members?page=1&pageSize=10" } },
+        { "name": "Get member", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/v1/members/1" } },
+        { "name": "Create member", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"fullName\": \"Ada Lovelace\",\n  \"email\": \"ada@example.com\",\n  \"phone\": \"+1-555-0100\"\n}" }, "url": "{{baseUrl}}/api/v1/members" } }
+      ]
+    },
+    {
+      "name": "Loans",
+      "item": [
+        { "name": "List active loans", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/v1/loans?activeOnly=true&page=1&pageSize=10" } },
+        { "name": "Borrow book", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"bookId\": 1,\n  \"memberId\": 1,\n  \"days\": 14\n}" }, "url": "{{baseUrl}}/api/v1/loans/borrow" } },
+        { "name": "Return loan", "request": { "method": "POST", "header": [], "url": "{{baseUrl}}/api/v1/loans/1/return" } },
+        { "name": "Overdue loans", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/v1/loans/overdue" } }
+      ]
+    }
+  ]
+}

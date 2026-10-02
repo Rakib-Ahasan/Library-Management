@@ -1,0 +1,23 @@
+## .NET
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Test and coverage
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+## Local configuration
+appsettings.*.local.json
+
+## IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
