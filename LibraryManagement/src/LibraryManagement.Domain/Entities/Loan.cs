@@ -24,7 +24,9 @@ namespace LibraryManagement.Domain.Entities
         public void MarkReturned(DateTime now)
         {
             if (ReturnedOn != null)
+            {
                 throw new BusinessRuleException("This book has already been returned.");
+            }
 
             ReturnedOn = now;
             Book.ReturnCopy();

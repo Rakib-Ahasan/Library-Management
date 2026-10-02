@@ -1,4 +1,4 @@
-using LibraryManagement.Application.Common;
+﻿using LibraryManagement.Application.Common;
 using LibraryManagement.Application.Interfaces;
 using LibraryManagement.Domain.Entities;
 using LibraryManagement.Infrastructure.Persistence;
@@ -22,13 +22,18 @@ public class LoanRepository : ILoanRepository
     /// <inheritdoc/>
     public async Task<Loan?> GetByIdAsync(int id, CancellationToken ct = default)
     {
-        return await _context.Loans.FindAsync(id, ct);
+        return await _context.Loans
+            .Include(loan => loan.Book)
+            .Include(loan => loan.Member)
+            .SingleOrDefaultAsync(loan => loan.Id == id, ct);
     }
 
     /// <inheritdoc/>
     public async Task<(IReadOnlyList<Loan> Items, int TotalCount)> GetPagedAsync(PagedQuery query, bool activeOnly, CancellationToken ct = default)
     {
         var queryable = _context.Loans.AsNoTracking()
+            .Include(loan => loan.Book)
+            .Include(loan => loan.Member)
             .Where(l =>
                 activeOnly ? l.ReturnedOn == null : true)
             .OrderBy(l => l.BorrowedOn)
@@ -47,6 +52,8 @@ public class LoanRepository : ILoanRepository
     public async Task<IReadOnlyList<Loan>> GetOverdueAsync(DateTime now, CancellationToken ct = default)
     {
         return await _context.Loans.AsNoTracking()
+            .Include(loan => loan.Book)
+            .Include(loan => loan.Member)
             .Where(l => l.ReturnedOn == null && l.DueDate < now)
             .OrderBy(l => l.DueDate)
             .ToListAsync(ct);
