@@ -1,4 +1,4 @@
-using FluentValidation;
+﻿using FluentValidation;
 using LibraryManagement.Domain.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -8,24 +8,15 @@ using System.Text.Json;
 
 namespace LibraryManagement.Api.Middleware;
 
-/// <summary>
-/// Global exception handler middleware that handles exceptions and returns ProblemDetails.
-/// </summary>
 public class GlobalExceptionHandler : IExceptionHandler
 {
     private readonly ILogger<GlobalExceptionHandler> _logger;
 
-    /// <summary>
-    /// Initializes a new instance of <see cref="GlobalExceptionHandler"/>.
-    /// </summary>
     public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
     {
         _logger = logger;
     }
 
-    /// <summary>
-    /// Handles the exception and writes a ProblemDetails response.
-    /// </summary>
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
         Exception exception,
@@ -64,10 +55,8 @@ public class GlobalExceptionHandler : IExceptionHandler
             Instance = httpContext.Request.Path
         };
 
-        // Include trace identifier
         problemDetails.Extensions["TraceId"] = httpContext.TraceIdentifier;
 
-        // Add validation errors for FluentValidation
         if (exception is ValidationException validationEx)
         {
             problemDetails.Extensions["ValidationErrors"] = validationEx.Errors

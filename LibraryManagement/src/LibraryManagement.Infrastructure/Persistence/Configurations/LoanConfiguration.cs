@@ -1,15 +1,11 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using LibraryManagement.Domain.Entities;
 
 namespace LibraryManagement.Infrastructure.Persistence.Configurations;
 
-/// <summary>
-/// Entity type configuration for the Loan entity.
-/// </summary>
 public class LoanConfiguration : IEntityTypeConfiguration<Loan>
 {
-    /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<Loan> builder)
     {
         builder.HasKey(e => e.Id);

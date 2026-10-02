@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation;
 using LibraryManagement.Application.Common;
 using LibraryManagement.Application.Dtos;
@@ -9,9 +9,6 @@ using LibraryManagement.Domain.Exceptions;
 
 namespace LibraryManagement.Application.Services;
 
-/// <summary>
-/// Implements the <see cref="ILoanService"/> contract.
-/// </summary>
 public class LoanService : ILoanService
 {
     private readonly ILoanRepository _repository;
@@ -21,9 +18,6 @@ public class LoanService : ILoanService
     private readonly IMapper _mapper;
     private readonly IValidator<BorrowRequest> _validator;
 
-    /// <summary>
-    /// Initialises a new instance of <see cref="LoanService"/>.
-    /// </summary>
     public LoanService(
         ILoanRepository repository,
         IBookRepository bookRepository,
@@ -40,7 +34,6 @@ public class LoanService : ILoanService
         _validator = validator;
     }
 
-    /// <inheritdoc/>
     public async Task<PagedResult<LoanResponse>> GetPagedAsync(PagedQuery query, bool activeOnly, CancellationToken ct = default)
     {
         var (loans, total) = await _repository.GetPagedAsync(query, activeOnly, ct);
@@ -48,14 +41,12 @@ public class LoanService : ILoanService
         return new PagedResult<LoanResponse>(items, query.Page, query.PageSize, total);
     }
 
-    /// <inheritdoc/>
     public async Task<IReadOnlyList<LoanResponse>> GetOverdueAsync(CancellationToken ct = default)
     {
         var loans = await _repository.GetOverdueAsync(DateTime.UtcNow, ct);
         return _mapper.Map<IReadOnlyList<LoanResponse>>(loans);
     }
 
-    /// <inheritdoc/>
     public async Task<LoanResponse> GetByIdAsync(int id, CancellationToken ct = default)
     {
         var loan = await _repository.GetByIdAsync(id, ct);
@@ -64,7 +55,6 @@ public class LoanService : ILoanService
             : _mapper.Map<LoanResponse>(loan);
     }
 
-    /// <inheritdoc/>
     public async Task<LoanResponse> BorrowAsync(BorrowRequest request, CancellationToken ct = default)
     {
         var validationResult = await _validator.ValidateAsync(request, ct);
@@ -98,7 +88,6 @@ public class LoanService : ILoanService
         return _mapper.Map<LoanResponse>(loan);
     }
 
-    /// <inheritdoc/>
     public async Task<LoanResponse> ReturnAsync(int loanId, CancellationToken ct = default)
     {
         var loan = await _repository.GetByIdAsync(loanId, ct)

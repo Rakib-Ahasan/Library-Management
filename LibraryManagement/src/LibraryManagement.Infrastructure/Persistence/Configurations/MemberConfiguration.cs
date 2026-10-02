@@ -1,15 +1,11 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using LibraryManagement.Domain.Entities;
 
 namespace LibraryManagement.Infrastructure.Persistence.Configurations;
 
-/// <summary>
-/// Entity type configuration for the Member entity.
-/// </summary>
 public class MemberConfiguration : IEntityTypeConfiguration<Member>
 {
-    /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<Member> builder)
     {
         builder.HasKey(e => e.Id);

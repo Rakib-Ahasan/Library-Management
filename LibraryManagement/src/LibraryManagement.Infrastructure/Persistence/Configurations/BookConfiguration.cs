@@ -1,15 +1,11 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using LibraryManagement.Domain.Entities;
 
 namespace LibraryManagement.Infrastructure.Persistence.Configurations;
 
-/// <summary>
-/// Entity type configuration for the Book entity.
-/// </summary>
 public class BookConfiguration : IEntityTypeConfiguration<Book>
 {
-    /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<Book> builder)
     {
         builder.HasKey(e => e.Id);

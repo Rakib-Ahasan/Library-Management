@@ -6,20 +6,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagement.Infrastructure.Repositories;
 
-/// <inheritdoc/>
 public class LoanRepository : ILoanRepository
 {
     private readonly ApplicationDbContext _context;
 
-    /// <summary>
-    /// Initialises a new instance of <see cref="LoanRepository"/>.
-    /// </summary>
     public LoanRepository(ApplicationDbContext context)
     {
         _context = context;
     }
 
-    /// <inheritdoc/>
     public async Task<Loan?> GetByIdAsync(int id, CancellationToken ct = default)
     {
         return await _context.Loans
@@ -28,7 +23,6 @@ public class LoanRepository : ILoanRepository
             .SingleOrDefaultAsync(loan => loan.Id == id, ct);
     }
 
-    /// <inheritdoc/>
     public async Task<(IReadOnlyList<Loan> Items, int TotalCount)> GetPagedAsync(PagedQuery query, bool activeOnly, CancellationToken ct = default)
     {
         var queryable = _context.Loans.AsNoTracking()
@@ -48,7 +42,6 @@ public class LoanRepository : ILoanRepository
         return (items, totalCount);
     }
 
-    /// <inheritdoc/>
     public async Task<IReadOnlyList<Loan>> GetOverdueAsync(DateTime now, CancellationToken ct = default)
     {
         return await _context.Loans.AsNoTracking()
@@ -59,20 +52,17 @@ public class LoanRepository : ILoanRepository
             .ToListAsync(ct);
     }
 
-    /// <inheritdoc/>
     public async Task<int> CountActiveByMemberAsync(int memberId, CancellationToken ct = default)
     {
         return await _context.Loans.AsNoTracking()
             .CountAsync(l => l.MemberId == memberId && l.ReturnedOn == null, ct);
     }
 
-    /// <inheritdoc/>
     public async Task AddAsync(Loan loan, CancellationToken ct = default)
     {
         await _context.Loans.AddAsync(loan, ct);
     }
 
-    /// <inheritdoc/>
     public void Remove(Loan loan)
     {
         _context.Loans.Remove(loan);

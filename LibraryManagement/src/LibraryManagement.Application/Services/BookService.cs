@@ -9,9 +9,6 @@ using LibraryManagement.Domain.Exceptions;
 
 namespace LibraryManagement.Application.Services;
 
-/// <summary>
-/// Implements the <see cref="IBookService"/> contract.
-/// </summary>
 public class BookService : IBookService
 {
     private readonly IBookRepository _repository;
@@ -19,9 +16,6 @@ public class BookService : IBookService
     private readonly IMapper _mapper;
     private readonly IValidator<BookRequest> _validator;
 
-    /// <summary>
-    /// Initialises a new instance of <see cref="BookService"/>.
-    /// </summary>
     public BookService(
         IBookRepository repository,
         IUnitOfWork uow,
@@ -34,7 +28,6 @@ public class BookService : IBookService
         _validator = validator;
     }
 
-    /// <inheritdoc/>
     public async Task<PagedResult<BookResponse>> GetPagedAsync(PagedQuery query, CancellationToken ct = default)
     {
         var (books, total) = await _repository.GetPagedAsync(query, ct);
@@ -42,7 +35,6 @@ public class BookService : IBookService
         return new PagedResult<BookResponse>(items, query.Page, query.PageSize, total);
     }
 
-    /// <inheritdoc/>
     public async Task<BookResponse> GetByIdAsync(int id, CancellationToken ct = default)
     {
         var book = await _repository.GetByIdAsync(id, ct);
@@ -51,7 +43,6 @@ public class BookService : IBookService
             : _mapper.Map<BookResponse>(book);
     }
 
-    /// <inheritdoc/>
     public async Task<BookResponse> CreateAsync(BookRequest request, CancellationToken ct = default)
     {
         var validationResult = await _validator.ValidateAsync(request, ct);
@@ -73,7 +64,6 @@ public class BookService : IBookService
         return _mapper.Map<BookResponse>(book);
     }
 
-    /// <inheritdoc/>
     public async Task UpdateAsync(int id, BookRequest request, CancellationToken ct = default)
     {
         var existing = await _repository.GetByIdAsync(id, ct)
@@ -96,7 +86,6 @@ public class BookService : IBookService
         await _uow.SaveChangesAsync(ct);
     }
 
-    /// <inheritdoc/>
     public async Task DeleteAsync(int id, CancellationToken ct = default)
     {
         var book = await _repository.GetByIdAsync(id, ct)

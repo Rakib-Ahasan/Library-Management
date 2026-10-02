@@ -1,20 +1,13 @@
-using AutoMapper;
+﻿using AutoMapper;
 using LibraryManagement.Application.Dtos;
 using LibraryManagement.Domain.Entities;
 
 namespace LibraryManagement.Application.Common.Mappings;
 
-/// <summary>
-/// AutoMapper profile for mapping between domain entities and DTOs.
-/// </summary>
 public class LibraryMappingProfile : Profile
 {
-    /// <summary>
-    /// Initializes a new instance of <see cref="LibraryMappingProfile"/>.
-    /// </summary>
     public LibraryMappingProfile()
     {
-        // Book mappings
         CreateMap<Book, BookResponse>().ReverseMap()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.Loans, opt => opt.Ignore());
@@ -24,7 +17,6 @@ public class LibraryMappingProfile : Profile
             .ForMember(dest => dest.AvailableCopies, opt => opt.MapFrom(src => src.TotalCopies))
             .ForMember(dest => dest.Loans, opt => opt.Ignore());
 
-        // Member mappings
         CreateMap<Member, MemberResponse>().ReverseMap()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.Loans, opt => opt.Ignore());
@@ -34,7 +26,6 @@ public class LibraryMappingProfile : Profile
             .ForMember(dest => dest.JoinedOn, opt => opt.Ignore())
             .ForMember(dest => dest.Loans, opt => opt.Ignore());
 
-        // Loan mappings
         CreateMap<Loan, LoanResponse>()
             .ForCtorParam(nameof(LoanResponse.Id), opt => opt.MapFrom(src => src.Id))
             .ForCtorParam(nameof(LoanResponse.BookId), opt => opt.MapFrom(src => src.BookId))

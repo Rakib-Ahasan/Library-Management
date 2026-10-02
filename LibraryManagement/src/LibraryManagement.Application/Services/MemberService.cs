@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation;
 using LibraryManagement.Application.Common;
 using LibraryManagement.Application.Dtos;
@@ -9,9 +9,6 @@ using LibraryManagement.Domain.Exceptions;
 
 namespace LibraryManagement.Application.Services;
 
-/// <summary>
-/// Implements the <see cref="IMemberService"/> contract.
-/// </summary>
 public class MemberService : IMemberService
 {
     private readonly IMemberRepository _repository;
@@ -19,9 +16,6 @@ public class MemberService : IMemberService
     private readonly IMapper _mapper;
     private readonly IValidator<MemberRequest> _validator;
 
-    /// <summary>
-    /// Initialises a new instance of <see cref="MemberService"/>.
-    /// </summary>
     public MemberService(
         IMemberRepository repository,
         IUnitOfWork uow,
@@ -34,7 +28,6 @@ public class MemberService : IMemberService
         _validator = validator;
     }
 
-    /// <inheritdoc/>
     public async Task<PagedResult<MemberResponse>> GetPagedAsync(PagedQuery query, CancellationToken ct = default)
     {
         var (members, total) = await _repository.GetPagedAsync(query, ct);
@@ -42,7 +35,6 @@ public class MemberService : IMemberService
         return new PagedResult<MemberResponse>(items, query.Page, query.PageSize, total);
     }
 
-    /// <inheritdoc/>
     public async Task<MemberResponse> GetByIdAsync(int id, CancellationToken ct = default)
     {
         var member = await _repository.GetByIdAsync(id, ct);
@@ -51,7 +43,6 @@ public class MemberService : IMemberService
             : _mapper.Map<MemberResponse>(member);
     }
 
-    /// <inheritdoc/>
     public async Task<MemberResponse> CreateAsync(MemberRequest request, CancellationToken ct = default)
     {
         var validationResult = await _validator.ValidateAsync(request, ct);
@@ -68,7 +59,6 @@ public class MemberService : IMemberService
         return _mapper.Map<MemberResponse>(member);
     }
 
-    /// <inheritdoc/>
     public async Task UpdateAsync(int id, MemberRequest request, CancellationToken ct = default)
     {
         var existing = await _repository.GetByIdAsync(id, ct)
@@ -85,7 +75,6 @@ public class MemberService : IMemberService
         await _uow.SaveChangesAsync(ct);
     }
 
-    /// <inheritdoc/>
     public async Task DeleteAsync(int id, CancellationToken ct = default)
     {
         var member = await _repository.GetByIdAsync(id, ct)

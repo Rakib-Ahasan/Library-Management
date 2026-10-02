@@ -1,4 +1,4 @@
-using LibraryManagement.Application.Interfaces;
+﻿using LibraryManagement.Application.Interfaces;
 using LibraryManagement.Infrastructure.Persistence;
 using LibraryManagement.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -7,14 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace LibraryManagement.Infrastructure;
 
-/// <summary>
-/// Extension methods for configuring infrastructure services.
-/// </summary>
 public static class DependencyInjection
 {
-    /// <summary>
-    /// Adds infrastructure services to the dependency injection container.
-    /// </summary>
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         IConfiguration configuration)
