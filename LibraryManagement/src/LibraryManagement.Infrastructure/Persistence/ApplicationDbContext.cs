@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using LibraryManagement.Domain.Entities;
 using System.Reflection;
 
@@ -49,8 +49,8 @@ public class ApplicationDbContext : DbContext
     }
 
     /// <inheritdoc/>
-    public override async Task<int> SaveChangesAsync(bool acceptAllEnabled = true, CancellationToken cancellationToken = default)
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return await base.SaveChangesAsync(acceptAllEnabled, cancellationToken);
+        return await base.SaveChangesAsync(cancellationToken);
     }
 }

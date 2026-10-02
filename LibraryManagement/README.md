@@ -1,6 +1,6 @@
 ﻿# Library Management API
 
-[![CI](https://github.com/your-org/LibraryManagement/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/LibraryManagement/actions/workflows/ci.yml)
+[![CI](https://github.com/Rakib-Ahasan/Library-Management/actions/workflows/ci.yml/badge.svg)](https://github.com/Rakib-Ahasan/Library-Management/actions/workflows/ci.yml)
 
 A Clean Architecture library management API built with .NET 10, ASP.NET Core, EF Core, SQL Server, FluentValidation, AutoMapper, and a service-oriented application layer.
 
@@ -98,6 +98,7 @@ curl -X POST "https://localhost:5001/api/v1/loans/borrow" \
 
 ## Author
 
-- Name: Project Maintainer
-- LinkedIn: https://www.linkedin.com/
-- GitHub: https://github.com/
+- **Md. Rakib Ahasan**
+- LinkedIn: https://www.linkedin.com/in/rakib-ahasan
+- GitHub: https://github.com/Rakib-Ahasan
+- Email: bd.rakibahasan@gmail.com

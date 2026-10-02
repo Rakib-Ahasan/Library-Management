@@ -1,8 +1,7 @@
-using LibraryManagement.Api.Middleware;
+﻿using LibraryManagement.Api.Middleware;
 using LibraryManagement.Application;
 using LibraryManagement.Infrastructure;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.OpenApi;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,15 +24,7 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Library Management API", Version = "v1" });
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
-    });
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo { Title = "Library Management API", Version = "v1" });
 });
 
 builder.Services.AddProblemDetails();
