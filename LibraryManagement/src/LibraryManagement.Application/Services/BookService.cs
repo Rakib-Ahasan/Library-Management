@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation;
 using LibraryManagement.Application.Common;
 using LibraryManagement.Application.Dtos;
@@ -56,10 +56,16 @@ public class BookService : IBookService
     {
         var validationResult = await _validator.ValidateAsync(request, ct);
         if (!validationResult.IsValid)
+        {
             throw new ValidationException(validationResult.Errors);
 
+        }
+
         if (await _repository.IsbnExistsAsync(request.Isbn, null, ct))
+        {
             throw new ConflictException($"A book with ISBN '{request.Isbn}' already exists.");
+
+        }
 
         var book = _mapper.Map<Book>(request);
         await _repository.AddAsync(book, ct);
@@ -75,10 +81,16 @@ public class BookService : IBookService
 
         var validationResult = await _validator.ValidateAsync(request, ct);
         if (!validationResult.IsValid)
+        {
             throw new ValidationException(validationResult.Errors);
 
+        }
+
         if (await _repository.IsbnExistsAsync(request.Isbn, id, ct))
+        {
             throw new ConflictException($"A book with ISBN '{request.Isbn}' already exists.");
+
+        }
 
         _mapper.Map(request, existing);
         await _uow.SaveChangesAsync(ct);
@@ -91,8 +103,11 @@ public class BookService : IBookService
             ?? throw new NotFoundException($"Book with identifier {id} was not found.");
 
         if (await _repository.HasLoansAsync(id, ct))
+        {
             throw new BusinessRuleException(
                 "Cannot delete a book that has active loans. Return all copies first.");
+        }
+           
 
         _repository.Remove(book);
         await _uow.SaveChangesAsync(ct);
